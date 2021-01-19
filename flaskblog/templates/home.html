@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% if posts|length!=0 %}
+    {% for post in posts %}
+    <article class="media content-section">
+        <div class="media-body">
+          <div class="article-metadata">
+            <p class="mr-2" href="#"> 
+                <img src={{ post.profile_image }} alt="Avatar" class="avatar"/><h4>{{post.user_name}}</h4> </p>
+            <small class="text-muted"><p>{{post.full_text[0]}}</p></small>
+        </div>
+
+    {% if post.sentiment_score > 0 %}
+    <p>Sentiment Score: {{post.sentiment_score}}</p>
+    <p style="color:rgb(28, 12, 247);">Positive</p>
+
+    {% elif post.sentiment_score ==0 %}
+    <p>Sentiment Score: {{post.sentiment_score}}</p>
+    <p style="color:rgb(21, 238, 13);">Neutral</p>
+
+    {% else %}
+    <p>Sentiment Score: {{post.sentiment_score}}</p>
+    <p style="color:tomato;"> Negative </p>
+</div>
+    {% endif %}
+</article>
+    {% endfor %}
+
+    {% else %}
+    <p>No results found in SOLR!</p>
+{% endif %}
+{% endblock content %}
+
+
+
+{% block contents %}
+{% if tests|length!=0 %}
+    {% for record in tests %}
+    <article class="media content-section">
+        <div class="media-body">
+          <div class="article-metadata">
+            <a class="mr-2" href="#"> <h5>{{record.title}}</h5> </a>
+            <small class="text-muted"><p>{{record.description}}</p></small>
+            <form action={{ record.url }}><input type="submit" value="More Details" /></form>
+        </div>
+
+        
+</article>
+    {% endfor %}
+{% else %}
+<p>No Results found in News!</p>
+
+{% endif %}
+
+{% endblock contents %}
+
+{% block content_specific %}
+
+{{ posts1 }}
+
+{% endblock content_specific %}
+
+{% block youtube_specific %}
+
+{% for video in youtube %}
+
+<iframe width="350" height="250" src = {{ video }} allowfullscreen="" width="100%" frameborder="0"> </iframe>
+
+{% endfor %}
+
+{% endblock youtube_specific %}
